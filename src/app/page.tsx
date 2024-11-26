@@ -2,6 +2,7 @@
 import Image from "next/image";
 import { useState } from "react";
 import localFont from "next/font/local";
+import Product from "./product";
 
 const PAGES = [
   'Main Page',
@@ -17,7 +18,16 @@ const OPTIONS = [
   'Sort by: Price Asc.'
 ];
 
-export default function Home() {
+const ITEMS = [
+  {title: "Bateria 1.5V", price: 13},
+  {title: "Bateria 1.8V", price: 35},
+  {title: "Bateria 3.3V", price: 50},
+  {title: "RJ-45 mały", price: 5.30},
+  {title: "RJ-45 średni", price: 12.00},
+  {title: "RJ-45 duży", price: 19.00},
+];
+
+export default function Index() {
   return (
     <div>
       <h1 className="flex justify-center font-bold font-jaro text-7xl p-5 pb-7">Our Shop</h1>
@@ -33,6 +43,11 @@ export default function Home() {
         {
           OPTIONS.map((opt, i) => (
             <li key={i} className="px-3 py-2 text-black font-normal"> {opt} </li>))
+        }
+      </ul>
+      <ul className="grid grid-cols-3 gap-x-20 gap-y-4 justify-between px-10">
+        {
+          ITEMS.map(({title, price}) => (<Product name={title} price={price}></Product>))  
         }
       </ul>
     </div>
