@@ -19,12 +19,12 @@ const OPTIONS = [
 ];
 
 const ITEMS = [
-  {title: "Bateria 1.5V", price: 13},
-  {title: "Bateria 1.8V", price: 35},
-  {title: "Bateria 3.3V", price: 50},
-  {title: "RJ-45 mały", price: 5.30},
-  {title: "RJ-45 średni", price: 12.00},
-  {title: "RJ-45 duży", price: 19.00},
+  {name: "Bateria 1.5V", price: 13},
+  {name: "Bateria 1.8V", price: 35},
+  {name: "Bateria 3.3V", price: 50},
+  {name: "RJ-45 mały", price: 5.30},
+  {name: "RJ-45 średni", price: 12.00},
+  {name: "RJ-45 duży", price: 19.00},
 ];
 
 export default function Index() {
@@ -47,7 +47,7 @@ export default function Index() {
       </ul>
       <ul className="grid grid-cols-3 gap-x-20 gap-y-4 justify-between px-10">
         {
-          ITEMS.map(({title, price}) => (<Product name={title} price={price}></Product>))  
+          ITEMS.map((props, i) => (<li key={i}><Product {...props}></Product></li>))
         }
       </ul>
     </div>
