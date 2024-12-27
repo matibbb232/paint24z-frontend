@@ -5,7 +5,7 @@ type ProductProps = {
     currency?: string
 };
 
-export default function Product({name, image_path, price, currency}: ProductProps) {
+export default function ProductListItem({name, image_path, price, currency}: ProductProps) {
     return (
         <div className="grid grid-cols-1 center justify-center justify-items-center 
             rounded-3xl bg-white py-10 aspect-square">
