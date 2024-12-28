@@ -30,6 +30,7 @@ function choosePage(pageState: PageState<Product[]>) {
         <div className="grid grid-rows-2 grid-cols-1 place-items-center">
           <h1>{"Something went wrong..."}</h1>
           <h2>{"No items to display :("}</h2>
+          {pageState.reason ? (<h3>{`Reason: ${pageState.reason}`}</h3>) : <></>}
         </div>
       );
     case PageStatus.Loading:
@@ -49,12 +50,14 @@ export default function Index() {
       try {
         const response = await fetch(url(EcommerceApi.Products));
         if (!response.ok) {
-          throw new Error(`HTTP error: Status ${response.status}`);
+          setPageState({ status: PageStatus.Error, reason: `HTTP status: ${response.status}` });
+          return;
         }
         let productsData: Product[] = await response.json();
         setPageState({ status: PageStatus.Data, data: productsData });
       } catch (err) {
-        setPageState({ status: PageStatus.Error });
+        // TODO: idk if displaying any error like this is good for the UX...
+        setPageState({ status: PageStatus.Error, reason: `An error occured: ${err}` });
       }
     };
 

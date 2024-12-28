@@ -5,7 +5,10 @@ export const enum PageStatus {
 }
 
 export type PageState<T> = {
-  status: PageStatus.Loading | PageStatus.Error,
+  status: PageStatus.Loading,
+} | {
+  status: PageStatus.Error,
+  reason?: string,
 } | {
   status: PageStatus.Data,
   data: T
