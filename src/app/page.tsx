@@ -53,6 +53,7 @@ export default function Index() {
           setPageState({ status: PageStatus.Error, reason: `HTTP status: ${response.status}` });
           return;
         }
+        // TODO: check if all fields are being received
         const productsData: Product[] = await response.json();
         setPageState({ status: PageStatus.Data, data: productsData });
       } catch (err) {
