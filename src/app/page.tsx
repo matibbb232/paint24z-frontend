@@ -53,7 +53,7 @@ export default function Index() {
           setPageState({ status: PageStatus.Error, reason: `HTTP status: ${response.status}` });
           return;
         }
-        let productsData: Product[] = await response.json();
+        const productsData: Product[] = await response.json();
         setPageState({ status: PageStatus.Data, data: productsData });
       } catch (err) {
         // TODO: idk if displaying any error like this is good for the UX...

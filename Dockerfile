@@ -2,11 +2,14 @@ FROM node:23-alpine
 
 WORKDIR /app
 
-COPY package*.json package-lock.json* ./
+COPY package*.json .
+
+RUN addgroup -g 1001 -S nodejs
+RUN adduser -S nextjs -u 1001
 
 RUN npm i
 
-COPY src next.config.ts postcss.config.mjs tailwind.config.ts tsconfig.json ./
+COPY . .
 
 RUN npm run build
 
