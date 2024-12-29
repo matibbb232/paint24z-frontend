@@ -2,11 +2,13 @@ FROM node:23-alpine
 
 WORKDIR /app
 
-COPY package.json ./
+COPY package*.json package-lock.json* ./
 
 RUN npm i
 
-COPY . .
+COPY src next.config.ts postcss.config.mjs tailwind.config.ts tsconfig.json ./
+
+RUN npm run build
 
 # TODO: change dev to release
-CMD ["npm", "run", "dev"]
+CMD ["npm", "run", "start"]
