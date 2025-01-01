@@ -1,3 +1,5 @@
+"use client"
+
 import { useEffect, useState } from "react";
 import { Product } from "../types/product";
 import { CartList } from "../resources/cart_list";
