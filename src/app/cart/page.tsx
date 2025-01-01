@@ -16,7 +16,6 @@ export default function Cart() {
     useEffect(
         () => {
             CartList.set(cartList);
-            window.dispatchEvent(new Event('storage'));
         }, [cartList]
     );
 

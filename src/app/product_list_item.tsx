@@ -2,18 +2,6 @@ import { CartList } from "./resources/cart_list";
 import { CURRENCY } from "./resources/constants";
 import { Product } from "./types/product";
 
-type ProductProps = {
-    name: string,
-    image_path?: string,
-    price: number,
-    currency?: string
-};
-
-function addToCart(product: Product) {
-    CartList.add(product);
-    window.dispatchEvent(new Event('storage'));
-}
-
 export default function ProductListItem({ product }: { product: Product }) {
     // TODO: Add separate image path to each product! 
     return (
@@ -23,7 +11,7 @@ export default function ProductListItem({ product }: { product: Product }) {
             <h1 className="py-2">{product.name}</h1>
             <hr className="w-4/5 h-2px mx-5 bg-black" />
             <p className="pt-2">{product.price.toFixed(2)} {CURRENCY}</p>
-            <button onClick={() => addToCart(product)}>Add to cart</button>
+            <button onClick={() => CartList.add(product)}>Add to cart</button>
         </div>
     );
 };
