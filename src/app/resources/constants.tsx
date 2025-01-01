@@ -1,0 +1,1 @@
+export const CURRENCY: string = "PLN" as const;

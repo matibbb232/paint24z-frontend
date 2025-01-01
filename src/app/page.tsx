@@ -3,28 +3,24 @@
 import NavBar from "./components/nav_bar";
 import LoadingDots from "./components/loading_dots";
 import "constants";
-import React, { useEffect, useState } from "react";
-import { EcommerceApi, url } from "./resources/constants";
-import ProductListItem from "./product";
+import { useEffect, useState } from "react";
+import { EcommerceApi, url } from "./resources/api";
+import ProductListItem from "./product_list_item";
 import { Product } from "./types/product";
 import { PageState, PageStatus } from "./types/page_state";
 
 function choosePage(pageState: PageState<Product[]>) {
   switch (pageState.status) {
     case PageStatus.Data:
-      return (<ul className="grid grid-cols-3 gap-x-20 gap-y-4 justify-between px-10">
-        {
-          pageState.data.map((product, i) => {
-            const props = {
-              name: product.name,
-              image_path: undefined,
-              price: product.price,
-              currency: "PLN",
-            };
-            return (<li key={i}> <ProductListItem {...props} /> </li>);
-          })
-        }
-      </ul>);
+      return (
+        <ul className="grid grid-cols-3 gap-x-20 gap-y-4 justify-between px-10">
+          {
+            pageState.data.map((product, i) => {
+              return (<li key={i}> <ProductListItem product={product} /> </li>);
+            })
+          }
+        </ul>
+      );
     case PageStatus.Error: // TODO: return some static error page
       return (
         <div className="grid grid-rows-2 grid-cols-1 place-items-center">
