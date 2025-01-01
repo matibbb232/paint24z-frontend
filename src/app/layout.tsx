@@ -7,25 +7,28 @@ const geistSans = localFont({
   variable: "--font-geist-sans",
   weight: "100 900",
 });
+
 const geistMono = localFont({
   src: "./resources/fonts/GeistMonoVF.woff",
   variable: "--font-geist-mono",
   weight: "100 900",
 });
 
+const jaro = localFont({
+  src: "./resources/fonts/Jaro.ttf",
+  variable: "--font-jaro",
+  weight: "100 900",
+});
+
 export const metadata: Metadata = {
   title: "Our Shop"
-};
+} as const;
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-        <link rel="stylesheet " href="https://fonts.googleapis.com/css2?family=Jaro" />
-      </head>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <head></head>
+      <body className={`${geistSans.variable} ${geistMono.variable} ${jaro.variable} antialiased`}>
         {children}
       </body>
     </html>
