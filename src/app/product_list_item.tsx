@@ -6,13 +6,13 @@ export default function ProductListItem({ product }: { product: Product }) {
     // TODO: Add separate image path to each product! 
     return (
         <div className="grid grid-cols-1 center justify-center justify-items-center 
-            rounded-3xl bg-white py-10 aspect-square">
-            <img src={"https://picsum.photos/300"} className="aspect-square" />
+            rounded-3xl bg-white p-8 aspect-square">
+            <img src={"https://picsum.photos/600"} className="w-[300px] h-auto aspect-square rounded-2xl shadow-lg" />
             <h1 className="py-2">{product.name}</h1>
             <hr className="w-4/5 h-2px mx-5 bg-black" />
             <p className="py-2">{product.price.toFixed(2)} {CURRENCY}</p>
             <div
-                className="flex flex-row justify-around rounded-lg bg-black mx-32 px-2 py-3 transition ease-in-out delay-50 hover:shadow-lg hover:cursor-pointer"
+                className="flex flex-row justify-around rounded-lg bg-black mb-0 mx-16 px-2 py-3 transition ease-in-out delay-50 hover:shadow-lg hover:cursor-pointer"
                 onClick={() => CartList.add(product)}>
                 <span className="text-white text-start">Add to cart</span>
                 <svg className="fill-white h-auto w-[12%]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" preserveAspectRatio="true">

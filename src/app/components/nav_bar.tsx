@@ -34,7 +34,7 @@ export default function NavBar() {
     }, []);
 
     return (
-        <>
+        <div className="mx-10">
             <div className="flex justify-center items-center" onClick={() => navigate_to("/products")}>
                 <h1 className="flex justify-center text-center font-bold font-jaro text-7xl p-5 pb-7">Our Shop</h1>
                 <svg className="px-5 absolute right-4 h-auto w-[5.8%] hover:cursor-pointer" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" preserveAspectRatio="true">
@@ -50,7 +50,7 @@ export default function NavBar() {
                         : <></>
                 }
             </div>
-            <ul className="container flex justify-between rounded-full px-5 py-3 mx-auto bg-highlightRed">
+            <ul className="flex justify-between rounded-full px-5 py-3 mx-5 bg-highlightRed">
                 {
                     PAGES_MOCK.map((page, i) => (
                         <li key={i} className="transition ease-in-out delay-50 hover:bg-background duration-300
@@ -58,12 +58,12 @@ export default function NavBar() {
                     text-black font-normal" onClick={() => console.log(page)}> {page} </li>))
                 }
             </ul>
-            <ul className="container flex justify-between my-5 mx-auto bg-white">
+            <ul className="flex justify-between my-5 mx-5 bg-white">
                 {
                     OPTIONS_MOCK.map((opt, i) => (
                         <li key={i} className="px-3 py-2 text-black font-normal"> {opt} </li>))
                 }
             </ul>
-        </>
+        </div>
     )
 }

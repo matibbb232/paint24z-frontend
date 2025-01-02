@@ -13,7 +13,7 @@ function choosePage(pageState: PageState<Product[]>) {
   switch (pageState.status) {
     case PageStatus.Data:
       return (
-        <ul className="grid grid-cols-3 gap-x-20 gap-y-4 justify-between px-10">
+        <ul className="grid grid-cols-3 gap-x-20 gap-y-4 justify-between mx-auto px-16">
           {
             pageState.data.map((product, i) => {
               return (<li key={i}> <ProductListItem product={product} /> </li>);
