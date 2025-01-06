@@ -8,6 +8,7 @@ import { EcommerceApi, url } from "./resources/api";
 import ProductListItem from "./product_list_item";
 import { Product } from "./types/product";
 import { PageState, PageStatus } from "./types/page_state";
+import { PAGE_PADDING } from "./resources/constants";
 
 function choosePage(pageState: PageState<Product[]>) {
   switch (pageState.status) {
@@ -26,17 +27,23 @@ function choosePage(pageState: PageState<Product[]>) {
         <div className="grid grid-rows-2 grid-cols-1 place-items-center">
           <h1>{"Something went wrong..."}</h1>
           <h2>{"No items to display :("}</h2>
-          {pageState.reason ? (<h3>{`Reason: ${pageState.reason}`}</h3>) : <></>}
+          <h3>{`Reason: ${pageState.reason ?? "unknown"}`}</h3>)
         </div>
       );
     case PageStatus.Loading:
       return (
-        <div className="flex items-center justify-center">
+        <div className="flex grow items-center justify-center">
           <LoadingDots />
         </div>
       );
   }
 }
+
+const OPTIONS_MOCK = [
+  'Products on page: 50',
+  'Filter',
+  'Sort by: Price Asc.'
+];
 
 export default function Index() {
   const [pageState, setPageState] = useState<PageState<Product[]>>({ status: PageStatus.Loading });
@@ -46,8 +53,7 @@ export default function Index() {
       try {
         const response = await fetch(url(EcommerceApi.Products));
         if (!response.ok) {
-          setPageState({ status: PageStatus.Error, reason: `HTTP status: ${response.status}` });
-          return;
+          throw new Error(`HTTP status: ${response.status}`);
         }
         // TODO: check if all fields are being received
         const productsData: Product[] = await response.json();
@@ -64,6 +70,12 @@ export default function Index() {
   return (
     <>
       <NavBar />
+      <ul className={`flex justify-between my-5 py-1 mx-${PAGE_PADDING * 3 + 1} bg-white`}>
+        {
+          ...[OPTIONS_MOCK.map((opt, i) => (
+            <li key={i} className="px-3 py-2 text-black font-normal"> {opt} </li>))]
+        }
+      </ul>
       {choosePage(pageState)}
     </>
   );

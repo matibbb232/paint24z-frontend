@@ -20,6 +20,12 @@ const jaro = localFont({
   weight: "100 900",
 });
 
+const inter = localFont({
+  src: "./resources/fonts/Inter.ttf",
+  variable: "--font-inter",
+  weight: "100 900",
+});
+
 export const metadata: Metadata = {
   title: "Our Shop"
 } as const;
@@ -28,7 +34,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en">
       <head></head>
-      <body className={`${geistSans.variable} ${geistMono.variable} ${jaro.variable} antialiased`}>
+      <body className={`${geistSans.variable} ${inter.variable} ${geistMono.variable} ${jaro.variable} antialiased`}>
         {children}
       </body>
     </html>

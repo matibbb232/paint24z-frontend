@@ -13,6 +13,7 @@ export default {
         background: "var(--background)",
         foreground: "var(--foreground)",
         highlightRed: "#A13F3F",
+        backgroundSecondary: "var(--background-secondary)",
         gray: "#808080",
       },
       fontFamily: {

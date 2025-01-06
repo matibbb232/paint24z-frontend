@@ -12,10 +12,10 @@ def generate_products(n: int=5):
              "Rezystor 4k7",
              "Rezystor 47k"]
     return [{
-        "id": str(random.randint(2137, 69420)),
+        "id": str(i),
         "name": random.choice(NAMES),
         "description": "jakieś tam ...gadanie o chopinie",
-        "price": random.random() * 5,
+        "price": random.random() * 250,
         "composition": 1,
         "weight": random.random(),
         "category": {
@@ -23,7 +23,7 @@ def generate_products(n: int=5):
             "description": "opis"
         },
         "manufacturer": { "name": "Januszex SA" }
-    } for _ in range(n)]
+    } for i in range(n)]
 
 
 @app.get("/products")
