@@ -1,1 +1,0 @@
-export const navigate_to = (url: string) => window.location.href = url;
