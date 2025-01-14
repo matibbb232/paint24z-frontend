@@ -6,7 +6,7 @@ export const ROUTES = {
 
 export class Navigator {
     public static go(url: string): void {
-        if (window.location.href !== url) {
+        if (window.location.pathname !== url) {
             window.location.href = url;
         }
     }
