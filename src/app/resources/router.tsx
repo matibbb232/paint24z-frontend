@@ -1,7 +1,7 @@
 export const ROUTES = {
     index: "/",
     cart: "/cart",
-    product: (id: number) => `/products/${id}`,
+    product: "/product"
 } as const;
 
 export class Navigator {
