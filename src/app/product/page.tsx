@@ -78,10 +78,10 @@ function choosePage(pageState : PageState<Product>){
     
             {/* Options */}
             <div className="flex justify-around gap-4 mt-8 bg-white rounded-3xl">
-              <div className="text-xl hover:shadow hover:cursor-pointer hover:bg-gray px-16 py-2 my-2 bg-gray-300 text-black rounded-3xl" onClick={() => handleClick(DescriptionOption.Option1)}>Options</div>
-              <div className="text-xl hover:shadow hover:cursor-pointer hover:bg-gray px-16 py-2 my-2 bg-gray-300 text-black rounded-3xl" onClick={() => handleClick(DescriptionOption.Option2)}>Options</div>
-              <div className="text-xl hover:shadow hover:cursor-pointer hover:bg-gray px-16 py-2 my-2 bg-gray-300 text-black rounded-3xl" onClick={() => handleClick(DescriptionOption.Option3)}>Options</div>
-              <div className="text-xl hover:shadow hover:cursor-pointer hover:bg-gray px-16 py-2 my-2 bg-gray-300 text-black rounded-3xl" onClick={() => handleClick(DescriptionOption.Option4)}>Options</div>
+              <div className="text-xl hover:shadow hover:cursor-pointer hover:bg-gray px-16 py-2 my-2 bg-gray-300 text-black rounded-3xl" onClick={() => handleClick(DescriptionOption.Option1)}>Options 1</div>
+              <div className="text-xl hover:shadow hover:cursor-pointer hover:bg-gray px-16 py-2 my-2 bg-gray-300 text-black rounded-3xl" onClick={() => handleClick(DescriptionOption.Option2)}>Options 2</div>
+              <div className="text-xl hover:shadow hover:cursor-pointer hover:bg-gray px-16 py-2 my-2 bg-gray-300 text-black rounded-3xl" onClick={() => handleClick(DescriptionOption.Option3)}>Options 3</div>
+              <div className="text-xl hover:shadow hover:cursor-pointer hover:bg-gray px-16 py-2 my-2 bg-gray-300 text-black rounded-3xl" onClick={() => handleClick(DescriptionOption.Option4)}>Options 4</div>
             </div>
     
             {/* Details Section */}

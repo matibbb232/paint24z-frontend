@@ -36,6 +36,7 @@ async def products(response: Response):
     response.headers["Access-Control-Allow-Origin"] = "*"
     if not products_generated:
         generate_products(products_num)
+        products_generated = True
     return products_arr
 
 @app.get("/product/{item_id}")
