@@ -15,11 +15,12 @@ def generate_products(n: int=5):
              "Rezystor 1k",
              "Rezystor 4k7",
              "Rezystor 47k"]
+    global products_arr
     for i in range(n):
         products_arr.append({
             "id": str(i),
             "name": random.choice(NAMES),
-            "description": "jakieś tam ...gadanie o chopinie",
+            "description": "jakieś tam... gadanie o chopinie",
             "price": random.random() * 250,
             "composition": 1,
             "weight": random.random(),
@@ -34,6 +35,7 @@ def generate_products(n: int=5):
 @app.get("/products")
 async def products(response: Response):
     response.headers["Access-Control-Allow-Origin"] = "*"
+    global products_generated, products_arr
     if not products_generated:
         generate_products(products_num)
         products_generated = True
