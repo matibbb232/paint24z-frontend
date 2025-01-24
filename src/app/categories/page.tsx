@@ -17,7 +17,7 @@ function choosePage(pageState: PageState<Category[]>) {
           {
             // TODO: fetch 1 product from /api/products?category=<this_category>
             pageState.data.map((category, i) => {
-              return (<li key={i}> <CategoryListItem id={category.id} name={category.name} img_url={"https://picsum.photos/600"}/> </li>);
+              return (<li key={i}> <CategoryListItem id={category.id} name={category.name} img_url={"https://picsum.photos/600"} /> </li>);
             })
           }
         </ul>

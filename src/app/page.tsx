@@ -9,8 +9,9 @@ import ProductListItem from "./product_list_item";
 import { Product } from "./types/product";
 import { PageState, PageStatus } from "./types/page_state";
 import { PAGE_PADDING } from "./resources/constants";
+import { useSearchParams } from "next/navigation";
 
-function choosePage(pageState: PageState<Product[]>) {
+function choosePage(pageState: PageState<Product[]>, searchParams: ReturnType<typeof useSearchParams>) {
   switch (pageState.status) {
     case PageStatus.Data:
       return (
@@ -46,12 +47,17 @@ const OPTIONS_MOCK = [
 ];
 
 export default function Index() {
+  const searchParams = useSearchParams();
   const [pageState, setPageState] = useState<PageState<Product[]>>({ status: PageStatus.Loading });
 
   useEffect(() => {
     const fetchDataForPosts = async () => {
       try {
-        const response = await fetch(url(EcommerceApi.Products));
+        let params = new Map();
+        if (searchParams.get('category') != null) {
+          params = new Map([['category', searchParams.get('category')]])
+        }
+        const response = await fetch(url(EcommerceApi.Products, params));
         if (!response.ok) {
           throw new Error(`HTTP status: ${response.status}`);
         }
@@ -76,7 +82,7 @@ export default function Index() {
             <li key={i} className="px-3 py-2 text-black font-normal"> {opt} </li>))]
         }
       </ul>
-      {choosePage(pageState)}
+      {choosePage(pageState, searchParams)}
     </>
   );
 }
