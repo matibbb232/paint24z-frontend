@@ -21,12 +21,12 @@ export default function ProductListItem({ product, quantityProps }: ProductProps
             <div className="flex flex-3 flex-col justify-center">
                 <div className="flex-2 flex justify-center text-center items-center text-[#A2A2A2]">{"Total"}</div>
                 <div className="flex-3 flex justify-center text-center items-center bg-white text-black rounded-lg p-3 w-40">
-                    {`${(product.price * quantityProps.quantity).toFixed(2)} ${CURRENCY}`}
+                    {`${(parseFloat(product.price) * quantityProps.quantity).toFixed(2)} ${CURRENCY}`}
                 </div>
                 <div className="flex-2 flex justify-center text-center text-inter text-lg text-[#A2A2A2]">
                     <span className="text-highlightRed">{`${quantityProps.quantity} ×`}</span>
                     &nbsp;
-                    {`${product.price.toFixed(2)}`}
+                    {`${parseFloat(product.price).toFixed(2)}`}
                 </div>
             </div>
         </div>

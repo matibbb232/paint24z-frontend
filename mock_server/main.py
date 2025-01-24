@@ -48,3 +48,17 @@ async def get_item(response: Response, item_id: str):
         if product["id"] == item_id:
             return product
     raise HTTPException(status_code=501, detail="Item not found") 
+
+
+@app.get("/categories")
+async def categories(response: Response):
+    response.headers["Access-Control-Allow-Origin"] = "*"
+    return [{
+        "id": "1",
+        "name": "kabelki",
+        "description": "opis"
+    },{
+        "id": "2",
+        "name": "przewody",
+        "description": "opis ale v2"
+    }]
