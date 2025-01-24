@@ -1,5 +1,6 @@
 export enum EcommerceApi {
     Products = "products",
+    Categories = "categories",
 }
 
 const is_prod = process.env.NODE_ENV == "production";

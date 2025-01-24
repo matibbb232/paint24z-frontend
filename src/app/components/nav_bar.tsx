@@ -6,7 +6,7 @@ const PAGES_ROUTES = new Map([
     ['Main Page', "/"] as const,
     // TODO: Add proper routes
     ['On Sale', ""] as const,
-    ['Categories', ""] as const,
+    ['Categories', "/categories"] as const,
     ['About Us', ""] as const,
     ['Contact', ""] as const,
 ]);
