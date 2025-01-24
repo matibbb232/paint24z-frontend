@@ -21,7 +21,7 @@ export default function ProductListItem({ product }: { product: Product }) {
             <img src={"https://picsum.photos/600"} className="w-[300px] h-auto aspect-square rounded-2xl shadow-lg" alt={`A photo of ${product.name}`} />
             <h1 className="py-2">{product.name}</h1>
             <hr className="w-4/5 h-2px mx-5 bg-black" />
-            <p className="py-2">{product.price.toFixed(2)} {CURRENCY}</p>
+            <p className="py-2">{parseFloat(product.price).toFixed(2)} {CURRENCY}</p>
             <div
                 className="flex flex-row justify-around rounded-lg bg-black mb-0 mx-16 px-2 py-3 transition ease-in-out delay-50 hover:shadow-lg hover:cursor-pointer"
                 onClick={() => CartList.add(product)}>

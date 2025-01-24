@@ -73,7 +73,7 @@ export default function Cart() {
                     </div>
                     <div className="flex-1 flex justify-between bg-white p-5 rounded-lg">
                         <span className="font-jaro font-bold text-7xl">Total:</span>
-                        <span className="font-jaro font-bold text-7xl">{`${cartList.reduce((accum, product) => accum + product.price, 0).toFixed(2)} ${CURRENCY}`}</span>
+                        <span className="font-jaro font-bold text-7xl">{`${cartList.reduce((accum, product) => accum + parseFloat(product.price), 0).toFixed(2)} ${CURRENCY}`}</span>
                     </div>
                 </div>
                 <div className="flex flex-auto flex-col gap-5 grow rounded-2xl justify-center text-center bg-white p-5">

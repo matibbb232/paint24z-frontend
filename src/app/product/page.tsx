@@ -63,7 +63,7 @@ function choosePage(pageState : PageState<Product>){
                 <div className="flex flex-col basis-11/12 items-center justify-center absolute inset-6 rounded-3xl bg-white">
                     <div className="flex basis-1/2 justify-center items-center">
                         <h2 className="text-3xl text-center font-bold items bg-center">
-                            CENA: {pageState.data.price.toFixed(2)} {CURRENCY}
+                            CENA: {parseFloat(pageState.data.price).toFixed(2)} {CURRENCY}
                         </h2>
                     </div>
                     <div className="flex basis-1/2 justify-center items-center">
