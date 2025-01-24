@@ -1,10 +1,10 @@
-export const enum EcommerceApi {
+export enum EcommerceApi {
     Products = "products",
 }
 
 const is_prod = process.env.NODE_ENV == "production";
 
-export function url(endpoint: EcommerceApi): string {
+export function url(endpoint: string): string {
     let FETCH_BASE_URL: string;
     if (is_prod) {
         FETCH_BASE_URL = "http://localhost/api/" as const;
