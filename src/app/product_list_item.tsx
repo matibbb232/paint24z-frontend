@@ -1,10 +1,7 @@
 import { CartList } from "./resources/cart_list";
 import { CURRENCY } from "./resources/constants";
 import { Product } from "./types/product";
-import { Navigator, ROUTES } from "./resources/router";
-import Link from "next/link"
-import { useRouter, useSearchParams } from "next/navigation"
-
+import { useRouter } from "next/navigation"
 
 
 export default function ProductListItem({ product }: { product: Product }) {

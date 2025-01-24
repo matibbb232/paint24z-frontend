@@ -22,6 +22,6 @@ export type Product = {
     price: string,
     composition: string,
     weight: string,
-    // category: Category,
-    // manufacturer: Manufacturer
+    category: Category,
+    manufacturer: Manufacturer
 };
