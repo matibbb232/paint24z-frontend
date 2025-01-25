@@ -5,7 +5,7 @@ import { Product } from "../types/product";
 import NavBar from "../components/nav_bar";
 import { CURRENCY, PAGE_PADDING } from "../resources/constants";
 import { useSearchParams } from "next/navigation"
-import { url } from "../resources/api";
+import { api_url } from "../resources/api";
 import { PageState, PageStatus } from "../types/page_state";
 import { CartList } from "../resources/cart_list";
 import { DescriptionOption } from "./description"
@@ -114,7 +114,7 @@ export default function ProductPage() {
   useEffect(() => {
     const fetchDataForPosts = async () => {
       try {
-        const response = await fetch(url("product/" + searchParams.get('id')));
+        const response = await fetch(api_url("product/" + searchParams.get('id')));
         if (!response.ok) {
           throw new Error(`HTTP status: ${response.status}`);
         }
@@ -128,7 +128,7 @@ export default function ProductPage() {
     };
 
     fetchDataForPosts();
-  });
+  }, []);
   return (
     <>
       <NavBar />

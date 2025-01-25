@@ -12,7 +12,7 @@ if (is_prod) {
     FETCH_BASE_URL = "http://localhost:8000/" as const;
 }
 
-export function url<T>(endpoint: string, searchParams: Map<string, string> = new Map()): string {
+export function api_url<T>(endpoint: string, searchParams: Map<string, string> = new Map()): string {
     return FETCH_BASE_URL
         + endpoint
         + (is_prod

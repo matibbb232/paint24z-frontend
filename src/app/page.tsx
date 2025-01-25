@@ -4,7 +4,7 @@ import NavBar from "./components/nav_bar";
 import LoadingDots from "./components/loading_dots";
 import "constants";
 import { useEffect, useState } from "react";
-import { EcommerceApi, url } from "./resources/api";
+import { EcommerceApi, api_url } from "./resources/api";
 import ProductListItem from "./product_list_item";
 import { Product } from "./types/product";
 import { PageState, PageStatus } from "./types/page_state";
@@ -57,7 +57,7 @@ export default function Index() {
         if (searchParams.get('category') != null) {
           params = new Map([['category', searchParams.get('category')]])
         }
-        const response = await fetch(url(EcommerceApi.Products, params));
+        const response = await fetch(api_url(EcommerceApi.Products, params));
         if (!response.ok) {
           throw new Error(`HTTP status: ${response.status}`);
         }

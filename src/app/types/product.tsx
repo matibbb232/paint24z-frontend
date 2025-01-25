@@ -22,6 +22,7 @@ export type Product = {
     price: string,
     composition: string,
     weight: string,
+    instock: number,
     category: Category,
     manufacturer: Manufacturer
 };

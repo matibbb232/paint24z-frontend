@@ -4,7 +4,7 @@ import "constants";
 import NavBar from "../components/nav_bar";
 import LoadingDots from "../components/loading_dots";
 import { useEffect, useState } from "react";
-import { EcommerceApi, url } from "../resources/api";
+import { EcommerceApi, api_url } from "../resources/api";
 import { PageState, PageStatus } from "../types/page_state";
 import { Category } from "./types";
 import CategoryListItem from "./category_list_item";
@@ -44,7 +44,7 @@ export default function Index() {
   useEffect(() => {
     const fetchDataForPosts = async () => {
       try {
-        const response = await fetch(url(EcommerceApi.Categories));
+        const response = await fetch(api_url(EcommerceApi.Categories));
         if (!response.ok) {
           throw new Error(`HTTP status: ${response.status}`);
         }
