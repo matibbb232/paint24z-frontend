@@ -13,7 +13,7 @@ const enum Subpages {
 }
 
 export default function Page() {
-    const [page, _setPage] = useState(Subpages.orders);
+    const [page, _setPage] = useState(Subpages.products);
     const [data, setData] = useState<Order[] | Product[]>([]);
 
     function setPage(new_page: Subpages) {
