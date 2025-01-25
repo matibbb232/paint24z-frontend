@@ -1,5 +1,6 @@
 from fastapi import FastAPI, Response, HTTPException
 import random
+import json
 
 app = FastAPI()
 
@@ -49,6 +50,16 @@ async def get_item(response: Response, item_id: str):
             return product
     raise HTTPException(status_code=501, detail="Item not found") 
 
+@app.get("/productCat/{category_name}")
+async def get_products(response: Response, category_name: str):
+    response.headers["Access-Control-Allow-Origin"] = "*"
+    result_arr = []
+    for product in products_arr:
+        if product["category"]["name"] == category_name:
+            result_arr.append(product)
+    if not result_arr:
+        raise HTTPException(status_code=501, detail="Item not found") 
+    return json.dumps(result_arr)
 
 @app.get("/categories")
 async def categories(response: Response):

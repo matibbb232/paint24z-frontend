@@ -9,6 +9,8 @@ import { url } from "../resources/api";
 import { PageState, PageStatus } from "../types/page_state";
 import { CartList } from "../resources/cart_list";
 import { DescriptionOption } from "./description"
+import ProductListItem from "../product_list_item";
+import { pages } from "next/dist/build/templates/app-page";
 //TODO: Implement site design
 //TODO: Implement Descritpion
 //TODO: Add navbar for description
@@ -20,82 +22,163 @@ type description = {
   description: string
 }
 
+type descriptionProps = {
+  productProp: Product,
+  descriptionState: description,
+  categoryProducts: Product[]
+}
+
+type serverResponse = {
+  product: Product,
+  categoryProducts: Product[]
+}
+
 const DESCRIPTION_MOCK: description[] = [
-  { optionName: "Option 1", description: "Opis jeden beka Opis jeden beka Opis jeden beka Opis jeden beka" },
-  { optionName: "Option 2", description: "Opis dwa" },
-  { optionName: "Option 3", description: "Opis trzy" },
-  { optionName: "Option 4", description: "Opis cztery" },
+  { optionName: "Description", description: "Opis jeden beka Opis jeden beka Opis jeden beka Opis jeden beka" },
+  { optionName: "Properties", description: "Opis dwa" },
+  { optionName: "Category", description: "Opis trzy" },
+  { optionName: "Similiar Items", description: "Opis cztery" },
 ];
 
+function Description({productProp, descriptionState, categoryProducts}: descriptionProps){
+  switch(descriptionState.optionName) {
+    case "Description":  
+      return(
+        <div className="flex flex-col p-1">
+          <div className="flex rounded-3xl bg-white items-center pt-3 pl-3 mb-5">
+            <h1 className="text text-6xl">Description</h1>
+          </div>
+          <div className="text text-xl">
+            <p>{productProp.description}</p>
+          </div>
+        </div>
+      );
+    
+    case "Properties":
+      return(
+        <div className="flex flex-col p-1">
+          <div className="flex rounded-3xl bg-white items-center pt-3 pl-3 mb-5">
+          <h1 className="text text-6xl">Properties</h1>
+          </div>
+          <div className="text text-xl">
+            <ul className="list-disc list-inside">
+              <li>Manufacturer: {productProp.manufacturer.name}</li>
+              <li>Weight: {parseFloat(productProp.weight).toFixed(2)} kg</li>
+              <li>Composition: {productProp.composition}</li>
+            </ul>
+          </div>
+        </div>
+      );
+
+    case "Category":
+      return(
+        <div className="flex flex-col p-1">
+          <div className="flex rounded-3xl bg-white items-center pt-3 pl-3 mb-5">
+          <h1 className="text text-6xl">Category: {productProp.category.name}</h1>
+          </div>
+           <div className="text text-xl">
+            <p>{productProp.category.description}</p>
+          </div>
+        </div>
+      );
+
+    case "Similiar Items":
+      console.log(typeof categoryProducts)
+
+      return(
+        
+        <div className="flex flex-col p-1">
+          <div className="flex rounded-3xl bg-white items-center pt-3 pl-3 mb-5">
+          <h1 className="text text-6xl">Similar items</h1>
+          </div>
+       <ul className="grid grid-cols-3 gap-x-20 gap-y-4 justify-between mx-auto px-16">
+                 {
+                   categoryProducts.map((product, i) => {
+                     return (<li key={i}> <ProductListItem product={product} /> </li>);
+                   })
+                 }
+               </ul>
+
+        </div>
+      );
+
+  }
+}
 
 
 function choosePage(
-  pageState: PageState<Product>,
+  pageState: PageState<serverResponse>,
   descriptionState: description,
   setDescriptionState: (desc: description) => void
 ) {
+
   const handleClick = (option: DescriptionOption) => {
-    setDescriptionState(DESCRIPTION_MOCK[option])
+    setDescriptionState(DESCRIPTION_MOCK[option]) 
   }
-
+  
   switch (pageState.status) {
-
     case PageStatus.Data:
-
+      console.log(typeof pageState.data.categoryProducts)
       return (
         <main className="container mx-auto bg-gray-100 text-black mt-8 p-4 rounded">
-          <div className="flex flex-wrap lg:flex-nowrap h-[768px]">
-            <div className="flex-1 basis-2/3 flex flex-col rounded-3xl bg-white">
-              <div className="flex basis-1/6 justify-start ml-10">
-                <h2 className="flex text-3xl items-center">
-                  {pageState.data.name}
-                </h2>
-              </div>
-              <div className="flex basis-5/6 items-center justify-center">
+            <div className="flex-1 flex flex-col rounded-3xl bg-white">
+              <div className="flex h-[650px]">
+              <div className="flex basis-7/12 items-center justify-center">
                 <img
                   src="https://magma.sklep.pl/hpeciai/506db649a6c6629fc75c9869fa7e634c/pol_pm_Tarcza-diamentowa-do-ciecia-betonu-400x32mm-400mm-MSG402-Magma-MSG-400x32-400-x-32-400x32mm-5547_3.jpg" // Replace with actual image
                   alt="Product"
                   className="w-auto h-auto object-contain"
                 />
               </div>
-            </div>
-            {/* Product Details */}
-            <div className="flex-1 flex basis-1/3 flex-col p-4 ml-10 relative rounded-3xl bg-gray">
-              <div className="flex flex-col basis-11/12 items-center justify-center absolute inset-6 rounded-3xl bg-white">
-                <div className="flex basis-1/2 justify-center items-center">
-                  <h2 className="text-3xl text-center font-bold items bg-center">
-                    CENA: {parseFloat(pageState.data.price).toFixed(2)} {CURRENCY}
-                  </h2>
+              <div className="flex-1 flex flex-col">
+                <div className="flex-1 basis-2/3 flex flex-col mt-12 px-4 mx-10 relative rounded-3xl bg-gray">
+                  <div className="flex basis-1/2 justify-center items-center">
+                    <h2 className="text-7xl text-center font-jaro font-bold items bg-center text-white">
+                      {pageState.data.product.name}
+                    </h2>
+                  </div>
+                  <div className="flex basis-1/2 justify-center items-center">
+                    <h2 className="text-6xl text-center font-jaro font-bold items bg-center text-white">
+                      {parseFloat(pageState.data.product.price).toFixed(2)} {CURRENCY}
+                    </h2>
+                  </div>
                 </div>
-                <div className="flex basis-1/2 justify-center items-center">
-                  <button className="bg-black text-white px-16 py-2 rounded mt-4 self-center"
-                    onClick={() => CartList.add(pageState.data)}>
+                <div className="flex basis-1/3 justify-center items-center">
+                  <button className="bg-gray text-white px-32 py-4 rounded-xl mt-4 self-center"
+                    onClick={() => CartList.add(pageState.data.product)}>
                     Add to Cart
                   </button>
                 </div>
               </div>
             </div>
-          </div>
+            <div className="flex flex-col basis-1/2 bg-gray rounded-3xl m-10">
+              {/* Options */}
+              <div className="flex justify-around gap-4 mt-4">
+                <div className="text-xl bg-white hover:shadow hover:cursor-pointer hover:bg-gray px-20 py-3 text-black rounded-3xl" onClick={() => handleClick(DescriptionOption.Option1)}>Description</div>
+                <div className="text-xl bg-white hover:shadow hover:cursor-pointer hover:bg-gray px-20 py-3 text-black rounded-3xl" onClick={() => handleClick(DescriptionOption.Option2)}>Properties</div>
+                <div className="text-xl bg-white hover:shadow hover:cursor-pointer hover:bg-gray px-20 py-3 text-black rounded-3xl" onClick={() => handleClick(DescriptionOption.Option3)}>Category</div>
+                <div className="text-xl bg-white hover:shadow hover:cursor-pointer hover:bg-gray px-20 py-3 text-black rounded-3xl" onClick={() => handleClick(DescriptionOption.Option4)}>Similiar Items</div>
+              </div>
+              {/* Details Section */}
+              <div className="p-2 text-black">
+              <hr className="w-128 h-1 mt-2 mb-4 bg-black border-0 rounded-sm"></hr>
+                <Description
+                productProp={pageState.data.product}
+                descriptionState={descriptionState}
+                categoryProducts={pageState.data.categoryProducts}
+                />
+              </div>
 
-          {/* Options */}
-          <div className="flex justify-around gap-4 mt-8 bg-white rounded-3xl">
-            <div className="text-xl hover:shadow hover:cursor-pointer hover:bg-gray px-16 py-2 my-2 bg-gray-300 text-black rounded-3xl" onClick={() => handleClick(DescriptionOption.Option1)}>Options 1</div>
-            <div className="text-xl hover:shadow hover:cursor-pointer hover:bg-gray px-16 py-2 my-2 bg-gray-300 text-black rounded-3xl" onClick={() => handleClick(DescriptionOption.Option2)}>Options 2</div>
-            <div className="text-xl hover:shadow hover:cursor-pointer hover:bg-gray px-16 py-2 my-2 bg-gray-300 text-black rounded-3xl" onClick={() => handleClick(DescriptionOption.Option3)}>Options 3</div>
-            <div className="text-xl hover:shadow hover:cursor-pointer hover:bg-gray px-16 py-2 my-2 bg-gray-300 text-black rounded-3xl" onClick={() => handleClick(DescriptionOption.Option4)}>Options 4</div>
-          </div>
+            </div>
+            </div>
+            {/* Product Details */}
 
-          {/* Details Section */}
-          <div className="mt-8 p-4 bg-white text-black rounded">
-            <h3 className="text-lg font-bold mb-4">{descriptionState.optionName}</h3>
-            <p>{descriptionState.description}</p>
-          </div>
         </main>
       );
 
     case PageStatus.Error:
 
-      return (<h1>Got some error</h1>);
+      return (<h1>{pageState.reason}</h1>);
 
     case PageStatus.Loading:
 
@@ -106,9 +189,7 @@ function choosePage(
 
 export default function ProductPage() {
   const searchParams = useSearchParams()
-  const [descriptionState, setDescriptionState] = useState<description>(DESCRIPTION_MOCK[0]);
-  const [pageState, setPageState] = useState<PageState<Product>>({ status: PageStatus.Loading });
-
+  const [pageState, setPageState] = useState<PageState<serverResponse>>({ status: PageStatus.Loading });
   console.log(searchParams.get('id'))
 
   useEffect(() => {
@@ -120,7 +201,15 @@ export default function ProductPage() {
         }
         // TODO: check if all fields are being received
         const productsData: Product = await response.json();
-        setPageState({ status: PageStatus.Data, data: productsData });
+
+        const secondResponse = await fetch(url("productCat/" + productsData.category.name));
+        if (!secondResponse.ok) {
+          throw new Error(`HTTP status: ${response.status}`);
+        }
+        // TODO: check if all fields are being received
+        const categoriesData: Product[] = JSON.parse(await secondResponse.json());
+
+        setPageState({ status: PageStatus.Data, data: {product: productsData, categoryProducts: categoriesData} });
       } catch (err) {
         // TODO: idk if displaying any error like this is good for the UX...
         setPageState({ status: PageStatus.Error, reason: `An error occured: ${err}` });
@@ -128,7 +217,9 @@ export default function ProductPage() {
     };
 
     fetchDataForPosts();
-  });
+  }, []);
+
+  const [descriptionState, setDescriptionState] = useState<description>(DESCRIPTION_MOCK[0]);
   return (
     <>
       <NavBar />
