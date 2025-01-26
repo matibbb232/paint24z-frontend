@@ -14,7 +14,7 @@ export default function ProductListItem({ product, quantityProps }: ProductProps
                 <img src={"https://picsum.photos/400"} className="h-24 aspect-square rounded-2xl shadow-lg" alt={`A photo of ${product.name}`} />
                 <div className="flex flex-col justify-start">
                     <div className="text-2xl font-inter">{product.name}</div>
-                    <div className="text-lg font-inter">{"TODO: product.manufacturer.name"}</div>
+                    <div className="text-lg font-inter">{product.manufacturer.name}</div>
                     <div className="text-md font-inter text-[#A2A2A2] truncate">{product.description}</div>
                 </div>
             </div>
