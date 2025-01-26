@@ -117,15 +117,16 @@ function choosePage(
   switch (pageState.status) {
     case PageStatus.Data:
       console.log(typeof pageState.data.categoryProducts)
+      console.log('photo_id=', pageState.data.product.photo_id)
       return (
         <main className="container mx-auto bg-gray-100 text-black mt-8 p-4 rounded">
             <div className="flex-1 flex flex-col rounded-3xl bg-white">
               <div className="flex h-[650px]">
               <div className="flex basis-7/12 items-center justify-center">
                 <img
-                  src="https://magma.sklep.pl/hpeciai/506db649a6c6629fc75c9869fa7e634c/pol_pm_Tarcza-diamentowa-do-ciecia-betonu-400x32mm-400mm-MSG402-Magma-MSG-400x32-400-x-32-400x32mm-5547_3.jpg" // Replace with actual image
+                  src={'http://localhost/images/' + pageState.data.product.photo_id}
                   alt="Product"
-                  className="w-auto h-auto object-contain"
+                  className="w-[550px] rounded-2xl h-auto aspect-square object-contain"
                 />
               </div>
               <div className="flex-1 flex flex-col">
@@ -200,12 +201,18 @@ function ProductPage() {
         // TODO: check if all fields are being received
         const productsData: Product = await response.json();
 
-        const secondResponse = await fetch(api_url("productCat/" + productsData.category.name));
+        let cat;
+        if (productsData.category.name != undefined) {
+          cat = new Map([['category',  productsData.category.name]])
+        } else {
+          cat = new Map();
+        }
+        const secondResponse = await fetch(api_url("products", cat));
         if (!secondResponse.ok) {
           throw new Error(`HTTP status: ${response.status}`);
         }
         // TODO: check if all fields are being received
-        const categoriesData: Product[] = JSON.parse(await secondResponse.json());
+        const categoriesData: Product[] = await secondResponse.json();
 
         setPageState({ status: PageStatus.Data, data: {product: productsData, categoryProducts: categoriesData} });
       } catch (err) {

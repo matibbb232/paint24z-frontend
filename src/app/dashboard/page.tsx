@@ -161,7 +161,7 @@ function ProductListItem({ product, key }: { product: Product, key: number }) {
         <div key={key} className="flex flex-row items-center justify-around bg-white p-3 text-black text-center  
                 rounded-2xl cursor-pointer hover:bg-neutral-100 duration-300"
             onClick={() => setExpanded(!expanded)}>
-            <img src={/* TODO: product.img! */ "https://picsum.photos/400"} className="flex-2 w-12 h-auto aspect-square rounded-lg shadow-lg" />
+            <img src={product.photo_id} className="flex-2 w-12 h-auto aspect-square rounded-lg shadow-lg" />
             <span className="flex-1">{product.name}</span>
             <span className="flex-1 overflow-ellipsis">{product.description}</span>
             <span className="flex-1">{`${parseFloat(product.price).toFixed(2)} ${CURRENCY}`}</span>

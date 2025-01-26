@@ -23,6 +23,7 @@ export type Product = {
     composition: string,
     weight: string,
     instock: number,
+    photo_id: string,
     category: Category,
     manufacturer: Manufacturer
 };
