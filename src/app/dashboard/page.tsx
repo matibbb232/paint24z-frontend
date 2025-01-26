@@ -4,8 +4,10 @@ import { useEffect, useState } from "react";
 import { Product } from "../types/product";
 import { api_url } from "../resources/api";
 import { CURRENCY } from "../resources/constants";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { Order } from "../types/order";
+import { isAuthenticated } from "../components/is_auth";
+import { Router } from "next/router";
 
 
 const enum Subpages {
@@ -51,6 +53,10 @@ export default function Page() {
         fetchData();
     }, [page]);
 
+    // TODO: make request to this page's Products or something and reset the token if its not validated
+    if (!isAuthenticated()) {
+        redirect('/login');
+    }
 
     return (
         <div className="mx-10 flex flex-col justify-items justify-center">
