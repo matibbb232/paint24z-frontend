@@ -72,7 +72,7 @@ function Index() {
     };
 
     fetchDataForPosts();
-  }, []);
+  }, [searchParams]);
 
   return (
     <>
