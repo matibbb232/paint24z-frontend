@@ -3,7 +3,7 @@
 import NavBar from "./components/nav_bar";
 import LoadingDots from "./components/loading_dots";
 import "constants";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { EcommerceApi, api_url } from "./resources/api";
 import ProductListItem from "./product_list_item";
 import { Product } from "./types/product";
@@ -12,6 +12,7 @@ import { PAGE_PADDING } from "./resources/constants";
 import { useSearchParams } from "next/navigation";
 
 function choosePage(pageState: PageState<Product[]>, searchParams: ReturnType<typeof useSearchParams>) {
+  console.log(searchParams);
   switch (pageState.status) {
     case PageStatus.Data:
       return (
@@ -46,7 +47,7 @@ const OPTIONS_MOCK = [
   'Sort by: Price Asc.'
 ];
 
-export default function Index() {
+function Index() {
   const searchParams = useSearchParams();
   const [pageState, setPageState] = useState<PageState<Product[]>>({ status: PageStatus.Loading });
 
@@ -86,3 +87,9 @@ export default function Index() {
     </>
   );
 }
+
+const Page = () => {
+  return (<Suspense><Index/></Suspense>);
+}
+
+export default Page;

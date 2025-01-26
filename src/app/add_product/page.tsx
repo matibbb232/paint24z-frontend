@@ -4,11 +4,9 @@ import { useEffect, useState } from "react";
 import { api_url } from "../resources/api";
 import { useRouter } from "next/navigation";
 import Select from "react-select";
-import { stringify } from "querystring";
 
 export default function Index() {
-    const router = useRouter();
-    const [product, setProduct] = useState<{
+    type Product = {
         id: string,
         name: string,
         description: string,
@@ -18,7 +16,12 @@ export default function Index() {
         instock: number,
         categories_id: string,
         manufacturers_id: string,
-    }>({
+    };
+    type Category = { id: string, name: string, description: string };
+    type Manufacturer = { id: string, name: string };
+
+    const router = useRouter();
+    const [product, setProduct] = useState<Product>({
         id: '0',
         name: '',
         description: '',
@@ -29,10 +32,6 @@ export default function Index() {
         categories_id: '',
         manufacturers_id: '',
     });
-
-    type Category = { id: string, name: string, description: string };
-    type Manufacturer = { id: string, name: string };
-
     const [manufacturers, setManufacturers] = useState<Manufacturer[]>([]);
     const [categories, setCategories] = useState<Category[]>([]);
     const [image, setImage] = useState<File | null | undefined>(null);
@@ -50,6 +49,7 @@ export default function Index() {
                 setCategories(await categories_response.json());
                 setManufacturers(await manufacturers_response.json());
             } catch (err) {
+                console.log(err);
                 setManufacturers([]);
                 setCategories([]);
             }
@@ -119,11 +119,11 @@ export default function Index() {
                     flex={"flex-1"} index={3} />
                 <div className="flex flex-1 flex-row gap-3 gap-x-10">
                     <InputPane
-                        onInput={(e) => setProduct({ ...product, weight: e.target.value })}
+                        onInput={(e) => setProduct({ ...product, weight: parseFloat(e.target.value ?? '') })}
                         name="Weight" width="w-3"
                         flex={"flex-1"} index={4} />
                     <InputPane
-                        onInput={(e) => setProduct({ ...product, composition: e.target.value })}
+                        onInput={(e) => setProduct({ ...product, composition: parseInt(e.target.value ?? '') })}
                         name="Composition" width="w-3"
                         flex={"flex-1"} index={5} />
                     <InputPane
@@ -165,7 +165,7 @@ export default function Index() {
 
 type InputPaneProps = {
     name: string,
-    onInput: (data: any) => void
+    onInput: (data: React.ChangeEvent<HTMLInputElement>) => void
     placeholder?: string,
     flex: string,
     width?: string,

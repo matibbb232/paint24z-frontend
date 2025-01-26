@@ -5,6 +5,7 @@ import { Product } from "../types/product";
 import { api_url } from "../resources/api";
 import { CURRENCY } from "../resources/constants";
 import { useRouter } from "next/navigation";
+import { Order } from "../types/order";
 
 
 const enum Subpages {
@@ -42,6 +43,7 @@ export default function Page() {
                 const data: Product[] | Order[] = await response.json();
                 setData(data);
             } catch (err) {
+                console.log(err);
                 setData([]);
             }
         };
@@ -208,7 +210,7 @@ function ProductListItem({ product, key }: { product: Product, key: number }) {
 
 type InputPaneProps = {
     name: string,
-    onInput: (data: any) => void
+    onInput: (data: React.ChangeEvent<HTMLInputElement>) => void
     placeholder?: string,
     flex: string,
     width?: string,

@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { Product } from "../types/product";
 import NavBar from "../components/nav_bar";
 import { CURRENCY, PAGE_PADDING } from "../resources/constants";
@@ -104,7 +104,7 @@ function choosePage(
 }
 
 
-export default function ProductPage() {
+function ProductPage() {
   const searchParams = useSearchParams()
   const [descriptionState, setDescriptionState] = useState<description>(DESCRIPTION_MOCK[0]);
   const [pageState, setPageState] = useState<PageState<Product>>({ status: PageStatus.Loading });
@@ -140,3 +140,9 @@ export default function ProductPage() {
     </>
   );
 }
+
+const Page = () => {
+  return (<Suspense><ProductPage/></Suspense>)
+}
+
+export default Page;
