@@ -4,7 +4,7 @@ import "constants";
 import NavBar from "../components/nav_bar";
 import LoadingDots from "../components/loading_dots";
 import { useEffect, useState } from "react";
-import { EcommerceApi, url } from "../resources/api";
+import { EcommerceApi, api_url } from "../resources/api";
 import { PageState, PageStatus } from "../types/page_state";
 import { Category } from "./types";
 import CategoryListItem from "./category_list_item";
@@ -17,7 +17,7 @@ function choosePage(pageState: PageState<Category[]>) {
           {
             // TODO: fetch 1 product from /api/products?category=<this_category>
             pageState.data.map((category, i) => {
-              return (<li key={i}> <CategoryListItem id={category.id} name={category.name} img_url={"https://picsum.photos/600"}/> </li>);
+              return (<li key={i}> <CategoryListItem id={category.id} name={category.name} img_url={"https://picsum.photos/600"} /> </li>);
             })
           }
         </ul>
@@ -44,7 +44,7 @@ export default function Index() {
   useEffect(() => {
     const fetchDataForPosts = async () => {
       try {
-        const response = await fetch(url(EcommerceApi.Categories));
+        const response = await fetch(api_url(EcommerceApi.Categories));
         if (!response.ok) {
           throw new Error(`HTTP status: ${response.status}`);
         }

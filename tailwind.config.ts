@@ -15,6 +15,8 @@ export default {
         highlightRed: "#A13F3F",
         backgroundSecondary: "var(--background-secondary)",
         gray: "#808080",
+        highlightGreen: "#3FA160",
+        highlightYellow: "#D89A27"
       },
       fontFamily: {
         jaro: ['"Jaro"']

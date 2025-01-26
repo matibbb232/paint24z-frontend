@@ -26,6 +26,7 @@ def generate_products(n: int=5):
             "price": random.random() * 250,
             "composition": 1,
             "weight": random.random(),
+            "instock": round(random.random() * 300),
             "category": {
                 "name": "Kabelki",
                 "description": "opis"
@@ -78,3 +79,29 @@ async def categories(response: Response):
         "name": "przewody",
         "description": "opis ale v2"
     }]
+
+@app.get("/manufacturers")
+async def manufacturers(response: Response):
+    response.headers["Access-Control-Allow-Origin"] = "*"
+    return [{
+        "id": "19",
+        "name": "JanuszexSA"
+    },{
+        "id": "139",
+        "name": "GoWin Sp. z o.o."
+    }]
+
+@app.get("/orders")
+async def orders(response: Response):
+    response.headers["Access-Control-Allow-Origin"] = "*"
+    return [
+        {
+            'id': round(random.random() * 2137),
+            'amount': random.random() * 250,
+            'status': 'In progress',
+            'order_date': '21.12.2024',
+            'shipping_date': '19.01.2025',
+            'history': '???',
+            'client': random.random() * 2138,
+        }
+    ]

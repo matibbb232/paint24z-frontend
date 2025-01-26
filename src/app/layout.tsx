@@ -35,7 +35,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html lang="en">
       <head></head>
       <body className={`${geistSans.variable} ${inter.variable} ${geistMono.variable} ${jaro.variable} antialiased`}>
-        {children}
+          {children}
       </body>
     </html>
   );

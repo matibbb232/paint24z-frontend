@@ -1,11 +1,11 @@
 "use client"
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { Product } from "../types/product";
 import NavBar from "../components/nav_bar";
 import { CURRENCY, PAGE_PADDING } from "../resources/constants";
 import { useSearchParams } from "next/navigation"
-import { url } from "../resources/api";
+import { api_url } from "../resources/api";
 import { PageState, PageStatus } from "../types/page_state";
 import { CartList } from "../resources/cart_list";
 import { DescriptionOption } from "./description"
@@ -185,7 +185,7 @@ function choosePage(
 }
 
 
-export default function ProductPage() {
+function ProductPage() {
   const searchParams = useSearchParams()
   const [pageState, setPageState] = useState<PageState<serverResponse>>({ status: PageStatus.Loading });
   console.log(searchParams.get('id'))
@@ -193,14 +193,14 @@ export default function ProductPage() {
   useEffect(() => {
     const fetchDataForPosts = async () => {
       try {
-        const response = await fetch(url("product/" + searchParams.get('id')));
+        const response = await fetch(api_url("product/" + searchParams.get('id')));
         if (!response.ok) {
           throw new Error(`HTTP status: ${response.status}`);
         }
         // TODO: check if all fields are being received
         const productsData: Product = await response.json();
 
-        const secondResponse = await fetch(url("productCat/" + productsData.category.name));
+        const secondResponse = await fetch(api_url("productCat/" + productsData.category.name));
         if (!secondResponse.ok) {
           throw new Error(`HTTP status: ${response.status}`);
         }
@@ -229,3 +229,9 @@ export default function ProductPage() {
     </>
   );
 }
+
+const Page = () => {
+  return (<Suspense><ProductPage/></Suspense>)
+}
+
+export default Page;

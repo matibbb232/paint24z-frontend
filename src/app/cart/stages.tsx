@@ -40,7 +40,7 @@ export default function Stages({ currentStage: current_stage }: StagesProps) {
     const values = ShoppingStages.values;
 
     return (
-        <div key="0" className="flex-1 flex flex-row grow justify-around items-center text-center rounded-2xl bg-white px-5 py-3">
+        <div className="flex-1 flex flex-row grow justify-around items-center text-center rounded-2xl bg-white px-5 py-3">
             {
                 values
                     .map((value, i) => (

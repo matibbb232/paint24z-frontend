@@ -11,6 +11,7 @@ import { StageButton } from "./panels"
 import { ShoppingStage } from "../types/shopping_stages";
 import { CURRENCY, PAGE_PADDING } from "../resources/constants";
 
+let initialized = false;
 
 export default function Cart() {
     const [cartList, setCartList] = useState<Product[]>([]);
@@ -41,6 +42,7 @@ export default function Cart() {
     // once on load
     useEffect(
         () => {
+            console.log(CartList.get())
             setCartList(CartList.get());
         }, []
     );
@@ -57,7 +59,7 @@ export default function Cart() {
             <NavBar />
             <div className={`flex flex-row gap-5 px-20 mt-5 mb-5 m-${PAGE_PADDING}`}>
                 <div className="flex flex-auto flex-col grow gap-5">
-                    <Stages key={0} currentStage={stage} />
+                    <Stages currentStage={stage} />
                     <Panel stage={stage} quantities={quantities} incrementQuantity={incrementQuantity} decrementQuantity={decrementQuantity} setStage={setStage} />
                     <div className="flex-1 flex justify-between bg-white p-5 rounded-lg">
                         <span className="font-jaro font-bold text-7xl">Total:</span>
