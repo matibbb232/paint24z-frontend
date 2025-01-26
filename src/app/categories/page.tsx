@@ -8,6 +8,7 @@ import { EcommerceApi, api_url } from "../resources/api";
 import { PageState, PageStatus } from "../types/page_state";
 import { Category } from "./types";
 import CategoryListItem from "./category_list_item";
+import ProductListItem from "../product_list_item";
 
 function choosePage(pageState: PageState<Category[]>) {
   switch (pageState.status) {
@@ -17,7 +18,7 @@ function choosePage(pageState: PageState<Category[]>) {
           {
             // TODO: fetch 1 product from /api/products?category=<this_category>
             pageState.data.map((category, i) => {
-              return (<li key={i}> <CategoryListItem id={category.id} name={category.name} img_url={"https://picsum.photos/600"} /> </li>);
+              return (<li key={i}> <CategoryListItem id={category.id} name={category.name} img_url={'http://localhost/images/RA_logo'} /> </li>);
             })
           }
         </ul>

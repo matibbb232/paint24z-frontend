@@ -180,7 +180,7 @@ function ProductListItem({ product, key }: { product: Product, key: number }) {
             </div>
             <hr className="flex-1 bg-black w-full h-1"></hr>
             <div className="flex flex-2 flex-row justify-around gap-5">
-                <img src={/* TODO: product.img! */ "https://picsum.photos/400"} className="flex-1 w-[10px] h-auto aspect-square rounded-2xl shadow-lg m-3" />
+                <img src={/* TODO: product.img! */ 'http://localhost/images/' + product.photo_id} className="flex-1 w-[10px] h-auto aspect-square rounded-2xl shadow-lg m-3" />
                 <div className="flex flex-1 flex-col w-[300px] justify-around py-16">
                     <div className="flex flex-1 flex-row gap-3 gap-x-10">
                         <InputPane
