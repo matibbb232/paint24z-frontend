@@ -100,7 +100,6 @@ function Description({productProp, descriptionState, categoryProducts}: descript
 
         </div>
       );
-
   }
 }
 
@@ -143,14 +142,14 @@ function choosePage(
                   </div>
                 </div>
                 <div className="flex basis-1/3 justify-center items-center">
-                  <button className="bg-gray text-white px-32 py-4 rounded-xl mt-4 self-center"
+                  <button className="bg-yellow-500 text-white px-32 py-4 rounded-xl mt-4 self-center"
                     onClick={() => CartList.add(pageState.data.product)}>
                     Add to Cart
                   </button>
                 </div>
               </div>
             </div>
-            <div className="flex flex-col basis-1/2 bg-gray rounded-3xl m-10">
+            <div className="flex flex-col basis-1/2 bg-background rounded-3xl m-10">
               {/* Options */}
               <div className="flex justify-around gap-4 mt-4">
                 <div className="text-xl bg-white hover:shadow hover:cursor-pointer hover:bg-gray px-20 py-3 text-black rounded-3xl" onClick={() => handleClick(DescriptionOption.Option1)}>Description</div>
