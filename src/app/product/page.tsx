@@ -10,7 +10,6 @@ import { PageState, PageStatus } from "../types/page_state";
 import { CartList } from "../resources/cart_list";
 import { DescriptionOption } from "./description"
 import ProductListItem from "../product_list_item";
-import { pages } from "next/dist/build/templates/app-page";
 //TODO: Implement site design
 //TODO: Implement Descritpion
 //TODO: Add navbar for description
