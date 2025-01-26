@@ -9,6 +9,7 @@ export default function ProductListItem({ product }: { product: Product }) {
     const router = useRouter()
     function GoToProducts(productId : string){
         router.push('/product?id='+productId) 
+        window.location.reload()
     }
     return (
         <div className="grid grid-cols-1 center justify-center justify-items-center 
