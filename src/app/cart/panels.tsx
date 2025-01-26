@@ -1,14 +1,9 @@
 "use client"
 
-import { Dispatch,SetStateAction, useEffect, useState } from "react";
+import { Dispatch,SetStateAction, useState } from "react";
 import { Product } from "../types/product";
-import { CartList } from "../resources/cart_list";
-import NavBar from "../components/nav_bar";
-import Stages from "./stages";
 import ProductListItem from "./product_list_item";
-import DetailsPanel from "./details_panel";
 import { ShoppingStage } from "../types/shopping_stages";
-import { CURRENCY, PAGE_PADDING } from "../resources/constants";
 
 type PanelProps = {
     stage: ShoppingStage,
@@ -77,7 +72,7 @@ export function StageButton({ stage, setStage }: StageButtonProps){
 
 export default function Panel({ stage, quantities, incrementQuantity, decrementQuantity }: PanelProps){
 
-    const [shipping, setShipping] = useState(DOSTAWY[0].value);
+    const [shipping, setShipping] = useState("-");
     const handleClick = (option: string) => {
         setShipping(option)
     }
@@ -150,8 +145,8 @@ export default function Panel({ stage, quantities, incrementQuantity, decrementQ
                                </tr>
                              </thead>
                              <tbody>
-                                {quantities.entries().map(([product, quantity], i) => (
-                                    <tr>
+                                {quantities.entries().map(([product, quantity],i) => (
+                                    <tr key={i}>
                                         <td className="p-4 pl-8 border-b border-blue-gray-50">
                                         <p className="block font-jaro text-xl antialiased font-normal leading-normal text-blue-gray-900">
                                             {product.name}

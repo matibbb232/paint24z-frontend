@@ -5,7 +5,6 @@ import { Product } from "../types/product";
 import { CartList } from "../resources/cart_list";
 import NavBar from "../components/nav_bar";
 import Stages from "./stages";
-import ProductListItem from "./product_list_item";
 import DetailsPanel from "./details_panel";
 import Panel from "./panels"
 import { StageButton } from "./panels"
