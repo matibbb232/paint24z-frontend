@@ -34,6 +34,9 @@ const LoginPage = () => {
             );
 
             if (!login_response.ok) {
+                if (login_response.status === 400) {
+                    throw new Error("The username or password are incorrect.")
+                }
                 throw new Error(`HTTP Error: ${login_response.status} ${login_response.statusText}`);
             }
 
@@ -41,7 +44,7 @@ const LoginPage = () => {
             localStorage.setItem('access_token', login_data.access);
             localStorage.setItem('refresh_token', login_data.refresh);
             localStorage.setItem('username', username);
-            console.log('acces=', localStorage.getItem('access_token'), 'refresh=', localStorage.getItem('refresh_token'))
+            console.log('access=', localStorage.getItem('access_token'), 'refresh=', localStorage.getItem('refresh_token'))
             // TODO: set and use refresh token!
 
             router.push("/");

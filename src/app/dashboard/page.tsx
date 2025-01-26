@@ -7,7 +7,6 @@ import { CURRENCY } from "../resources/constants";
 import { redirect, useRouter } from "next/navigation";
 import { Order } from "../types/order";
 import { isAuthenticated } from "../components/is_auth";
-import { Router } from "next/router";
 
 
 const enum Subpages {
@@ -18,6 +17,7 @@ const enum Subpages {
 export default function Page() {
     const [page, _setPage] = useState(Subpages.products);
     const [data, setData] = useState<Order[] | Product[]>([]);
+    const [auth, setAuth] = useState<string | null>(null);
 
     function setPage(new_page: Subpages) {
         setData([]);
@@ -25,6 +25,12 @@ export default function Page() {
     }
 
     useEffect(() => {
+        const isAuth = isAuthenticated();
+        if (!isAuth) {
+            redirect('/login');
+        }
+        setAuth(isAuth);
+ 
         setData([]);
         const fetchData = async () => {
             try {
@@ -53,10 +59,11 @@ export default function Page() {
         fetchData();
     }, [page]);
 
-    // TODO: make request to this page's Products or something and reset the token if its not validated
-    if (!isAuthenticated()) {
-        redirect('/login');
+    if (!auth) {
+        return null;
     }
+
+    // TODO: make request to this page's Products or something and reset the token if its not validated
 
     return (
         <div className="mx-10 flex flex-col justify-items justify-center">

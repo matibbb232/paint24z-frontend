@@ -16,6 +16,7 @@ const PAGES_ROUTES = new Map([
 
 export default function NavBar() {
     const [itemsInCartLen, setItemsInCartLen] = useState(0);
+    const [user, setUser] = useState<string | null | undefined>(null);
     const router = useRouter();
 
     useEffect(() => {
@@ -24,6 +25,8 @@ export default function NavBar() {
             const item = CartList.get().length;
             setItemsInCartLen(item);
         }
+
+        setUser(isAuthenticated());
 
         window.addEventListener('storage', checkUserData);
 
@@ -34,23 +37,23 @@ export default function NavBar() {
 
     return (
         <div className="mx-10">
-            <h1 className="flex justify-center text-center font-bold font-jaro text-7xl p-5 pb-7 cursor-pointer">Our Shop</h1>
-            {
-                isAuthenticated() ?
-                    <div className="rounded-xl flex bg-highlightGreen justify-center items-center 
-                px-5 absolute top-12 right-28 h-auto w-[5.8%] hover:cursor-pointer"
-                onClick={() => router.push("/login")}>
-                        Sign in
-                    </div> : <div className="rounded-xl flex bg-highlightYellow justify-center items-center 
-                px-5 absolute top-12 right-28 h-auto w-[5.8%] hover:cursor-pointer"
-                onClick={() => router.push("/TODO-LOGOUT")}>
-                        Welcome, {localStorage.getItem('username')}
-                    </div>
-
-            }
-
+            <h1 className="flex flex-row gap-5 justify-center text-center font-bold font-jaro text-7xl p-5 pb-7 cursor-pointer">Our Shop</h1>
+            <div className="absolute right-40 top-12">
+                {
+                    user == null ?
+                        <div className="rounded-xl flex bg-highlightGreen justify-center items-center 
+                    px-5 right-28 h-auto hover:cursor-pointer"
+                            onClick={() => router.push("/login")}>
+                            Sign in
+                        </div> : <div className="rounded-xl flex bg-highlightYellow justify-center items-center 
+                    px-5 right-28 h-auto hover:cursor-pointer"
+                            onClick={() => router.push("/TODO-LOGOUT")}>
+                            Welcome, {user}
+                        </div>
+                }
+            </div>
             <div className="flex justify-center items-center" onClick={() => router.push("/cart")}>
-                <svg className="px-5 absolute top-8 right-4 h-auto w-[5.8%] hover:cursor-pointer" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" preserveAspectRatio="true">
+                <svg className="absolute right-4 top-8 px-5 h-auto w-[5.8%] hover:cursor-pointer" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" preserveAspectRatio="true">
                     <path d="M0 24C0 10.7 10.7 0 24 0L69.5 0c22 0 41.5 12.8 50.6 32l411 0c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3l-288.5 0 5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5L488 336c13.3 0 24 10.7 24 24s-10.7 24-24 24l-288.3 0c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5L24 48C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z" />
                 </svg>
                 {
