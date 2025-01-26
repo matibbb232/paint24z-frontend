@@ -8,7 +8,7 @@ type ProductProps = {
 
 export default function ProductListItem({ product, quantityProps }: ProductProps) {
     return (
-        <div className="flex basis-5/6 flex-row gap-5 justify-between items-center p-3 rounded-2xl bg-background">
+        <div className="flex flex-row gap-5 justify-between items-center p-3 rounded-2xl bg-background">
             <div className="flex-1 flex gap-5 justify-start">
                 <Quantity {...{ product: product, quantityProps: quantityProps }} />
                 <img src={"https://picsum.photos/400"} className="h-24 aspect-square rounded-2xl shadow-lg" alt={`A photo of ${product.name}`} />

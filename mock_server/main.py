@@ -7,6 +7,7 @@ app = FastAPI()
 products_num = 20
 products_arr = []
 products_generated = False
+last_used_id = ""
 
 
 def generate_products(n: int=5):
@@ -45,8 +46,10 @@ async def products(response: Response):
 @app.get("/product/{item_id}")
 async def get_item(response: Response, item_id: str):
     response.headers["Access-Control-Allow-Origin"] = "*"
+    global last_used_id
     for product in products_arr:
         if product["id"] == item_id:
+            last_used_id = item_id
             return product
     raise HTTPException(status_code=501, detail="Item not found") 
 
@@ -54,9 +57,11 @@ async def get_item(response: Response, item_id: str):
 async def get_products(response: Response, category_name: str):
     response.headers["Access-Control-Allow-Origin"] = "*"
     result_arr = []
+    global last_used_id
     for product in products_arr:
         if product["category"]["name"] == category_name:
-            result_arr.append(product)
+            if product["id"] != last_used_id:
+                result_arr.append(product)
     if not result_arr:
         raise HTTPException(status_code=501, detail="Item not found") 
     return json.dumps(result_arr)
