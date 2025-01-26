@@ -76,11 +76,13 @@ export default function Index() {
             return;
         }
         try {
+            const images_response = await fetch("/images", { method: "POST", body: image });
+            // TODO: zobaczyć czy zwraca ok
+            // TODO: jeśli tak, to dorzucić image_path do produktu
             const addproduct_response = await fetch(api_url("/addproduct"), {
                 method: "POST",
                 body: JSON.stringify(product)
             });
-            const images_response = await fetch("/images", { method: "POST", body: image });
             if (!addproduct_response.ok || !images_response.ok) {
                 alert("Success!")
                 router.push("/dashboard");
