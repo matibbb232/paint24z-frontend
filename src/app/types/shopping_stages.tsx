@@ -1,13 +1,13 @@
 export const enum ShoppingStage {
     Cart = "Cart",
-    Checkout = "Checkout", 
     Shipping = "Shipping",
+    Checkout = "Checkout", 
 };
 
 export const ShoppingStages = {
     values: [
         ShoppingStage.Cart,
-        ShoppingStage.Checkout,
         ShoppingStage.Shipping,
+        ShoppingStage.Checkout,
     ]
 } as const;

@@ -1,4 +1,6 @@
 import Select from "react-select";
+import { ShoppingStage } from "../types/shopping_stages";
+import { useForm } from "react-hook-form";
 
 const enum InputType {
     TextField,
@@ -52,32 +54,69 @@ const CONTACT_INPUT_ROWS: InputPaneProps[][] = [
     ],
 ];
 
-export default function DetailsPanel() {
-    return (
-        <div className="flex-1 flex flex-col gap-5 p-5 rounded-3xl bg-background grow">
-            <h1 className="flex text-start text-3xl font-inter">Address</h1>
-            <div className="flex flex-col">
-                {
-                    ADDRESS_INPUT_ROWS.map((row, j) => (
-                        <div key={j} className="flex flex-row gap-2">
-                            {row.map((props, i) => <InputPane key={i} index={i} {...props} />)}
-                        </div>
-                    ))
-                }
-            </div>
 
-            <h1 className="flex text-start text-3xl font-inter">Contact</h1>
-            <div className="flex flex-col">
-                {
-                    CONTACT_INPUT_ROWS.map((row, j) => (
-                        <div key={j} className="flex flex-row gap-2">
-                            {row.map((props, i) => <InputPane key={i} index={i} {...props} />)}
-                        </div>
-                    ))
-                }
-            </div>
-        </div>
-    );
+type DetailsPanelProp = {
+    stage: ShoppingStage
+}
+
+type FormValues = {
+    street: string,
+    number: string,
+    flat: string,
+    postCode: string,
+    city: string,
+    country: string,
+    prefix: string,
+    phone: string,
+    email: string
+}
+
+export default function DetailsPanel({ stage }: DetailsPanelProp) {
+
+    const { register, handleSubmit } = useForm<FormValues>(undefined)
+
+    switch(stage){
+        case ShoppingStage.Cart: 
+            return (
+                <div className="flex-1 flex flex-col gap-5 p-5 rounded-3xl bg-background grow">
+                    <h1 className="flex text-start text-3xl font-inter">Address</h1>
+                    <div className="flex flex-col">
+                        {
+                            ADDRESS_INPUT_ROWS.map((row, j) => (
+                                <div key={j} className="flex flex-row gap-2">
+                                    {row.map((props, i) => <InputPane key={i} index={i} {...props} />)}
+                                </div>
+                            ))
+                        }
+                    </div>
+
+                    <h1 className="flex text-start text-3xl font-inter">Contact</h1>
+                    <div className="flex flex-col">
+                        {
+                            CONTACT_INPUT_ROWS.map((row, j) => (
+                                <div key={j} className="flex flex-row gap-2">
+                                    {row.map((props, i) => <InputPane key={i} index={i} {...props} />)}
+                                </div>
+                            ))
+                        }
+                    </div>
+                </div>
+            );
+
+        case ShoppingStage.Shipping:
+            return(
+                <div className="flex-1 flex flex-col gap-5 p-5 rounded-3xl bg-background grow">
+
+                </div>
+            );
+
+        case ShoppingStage.Checkout:
+            return(
+                <div className="flex-1 flex flex-col gap-5 p-5 rounded-3xl bg-background grow">
+                    
+                </div>
+            );
+    }
 }
 
 function InputPane(props: InputPaneProps & { index: number }) {
