@@ -11,11 +11,10 @@ import { StageButton } from "./panels"
 import { ShoppingStage } from "../types/shopping_stages";
 import { CURRENCY, PAGE_PADDING } from "../resources/constants";
 
-let initialized = false;
-
 export default function Cart() {
     const [cartList, setCartList] = useState<Product[]>([]);
-    const [stage,setStage] = useState<ShoppingStage>(ShoppingStage.Cart);
+    const [init, setInit] = useState(false);
+    const [stage, setStage] = useState<ShoppingStage>(ShoppingStage.Cart);
     const quantities = quantitiesFromProducts(cartList);
     const incrementQuantity = (product: Product) => {
         setCartList([...cartList, product]);
@@ -42,15 +41,19 @@ export default function Cart() {
     // once on load
     useEffect(
         () => {
-            console.log(CartList.get())
+            console.log('1st useEffect:', CartList.get())
             setCartList(CartList.get());
+            setInit(true);
         }, []
     );
 
     // on every item insert
     useEffect(
         () => {
-            CartList.set(cartList);
+            if (init) {
+                console.log('2nd useEffect:', CartList.get(), cartList)
+                CartList.set(cartList);
+            }
         }, [cartList]
     );
 
@@ -60,7 +63,7 @@ export default function Cart() {
             <div className={`flex flex-row gap-5 px-20 mt-5 mb-5 m-${PAGE_PADDING}`}>
                 <div className="flex flex-auto flex-col grow gap-5">
                     <Stages currentStage={stage} />
-                    <Panel stage={stage} quantities={quantities} incrementQuantity={incrementQuantity} decrementQuantity={decrementQuantity} setStage={setStage} />
+                    <Panel stage={stage} quantities={quantities} incrementQuantity={incrementQuantity} decrementQuantity={decrementQuantity} />
                     <div className="flex-1 flex justify-between bg-white p-5 rounded-lg">
                         <span className="font-jaro font-bold text-7xl">Total:</span>
                         <span className="font-jaro font-bold text-7xl">{`${cartList.reduce((accum, product) => accum + parseFloat(product.price), 0).toFixed(2)} ${CURRENCY}`}</span>
