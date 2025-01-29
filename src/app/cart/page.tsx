@@ -5,13 +5,15 @@ import { Product } from "../types/product";
 import { CartList } from "../resources/cart_list";
 import NavBar from "../components/nav_bar";
 import Stages from "./stages";
-import DetailsPanel from "./details_panel";
+import { DetailsPanel, quantitiesFromProducts } from "./details_panel";
 import Panel from "./panels"
 import { StageButton } from "./panels"
 import { ShoppingStage } from "../types/shopping_stages";
 import { CURRENCY, PAGE_PADDING } from "../resources/constants";
+import { useRouter } from "next/navigation";
 
 export default function Cart() {
+    const router = useRouter();
     const [cartList, setCartList] = useState<Product[]>([]);
     const [init, setInit] = useState(false);
     const [stage, setStage] = useState<ShoppingStage>(ShoppingStage.Cart);
@@ -72,34 +74,13 @@ export default function Cart() {
                 <div className="flex flex-auto flex-col gap-5 rounded-2xl justify-center text-center bg-white p-5">
                     <h1 className="flex-4 font-bold font-inter text-3xl">Details</h1>
                     <DetailsPanel stage={stage} />
-                    {stage === ShoppingStage.Cart ? 
-                    <button className="rounded-lg bg-[#494949] text-white font-bold text-3xl"> ... or login </button> 
-                    : <p></p>
-                    } 
-                    <StageButton stage={stage} setStage={setStage}/>
+                    {stage === ShoppingStage.Cart ?
+                        <button onClick={() => router.push('/login')} className="rounded-lg bg-[#494949] text-white font-bold text-3xl"> ... or login </button>
+                        : <p></p>
+                    }
+                    <StageButton stage={stage} setStage={setStage} />
                 </div>
             </div>
         </>
     );
-}
-
-function quantitiesFromProducts(products: Product[]): Map<Product, number> {
-    type ProductAndQuantity = {
-        product: Product,
-        quantity: number
-    };
-
-    const map = new Map<string, ProductAndQuantity>();
-
-    for (const product of products) {
-        const maybeProduct: ProductAndQuantity | undefined = map.get(product.id);
-
-        if (maybeProduct != undefined) {
-            map.set(product.id, { product: maybeProduct.product, quantity: maybeProduct.quantity + 1 });
-        } else {
-            map.set(product.id, { product: product, quantity: 1 });
-        }
-    }
-
-    return new Map(map.entries().map(([, { product, quantity }]) => [product, quantity]));
 }

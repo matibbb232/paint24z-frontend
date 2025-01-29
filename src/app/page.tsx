@@ -8,7 +8,6 @@ import { EcommerceApi, api_url } from "./resources/api";
 import ProductListItem from "./product_list_item";
 import { Product } from "./types/product";
 import { PageState, PageStatus } from "./types/page_state";
-import { PAGE_PADDING } from "./resources/constants";
 import { useSearchParams } from "next/navigation";
 
 function choosePage(pageState: PageState<Product[]>, searchParams: ReturnType<typeof useSearchParams>) {
@@ -16,7 +15,7 @@ function choosePage(pageState: PageState<Product[]>, searchParams: ReturnType<ty
   switch (pageState.status) {
     case PageStatus.Data:
       return (
-        <ul className="grid grid-cols-3 gap-x-20 gap-y-4 justify-between mx-auto px-16">
+        <ul className="grid grid-cols-3 gap-x-20 gap-y-4 justify-between mx-auto px-16 py-5">
           {
             pageState.data.map((product, i) => {
               return (<li key={i}> <ProductListItem product={product} /> </li>);
@@ -26,7 +25,7 @@ function choosePage(pageState: PageState<Product[]>, searchParams: ReturnType<ty
       );
     case PageStatus.Error: // TODO: return some static error page
       return (
-        <div className="grid grid-rows-2 grid-cols-1 place-items-center">
+        <div className="grid grid-rows-2 grid-cols-1 place-items-center p-5">
           <h1>{"Something went wrong..."}</h1>
           <h2>{"No items to display :("}</h2>
           <h3>{`Reason: ${pageState.reason ?? "unknown"}`}</h3>)
@@ -34,18 +33,18 @@ function choosePage(pageState: PageState<Product[]>, searchParams: ReturnType<ty
       );
     case PageStatus.Loading:
       return (
-        <div className="flex grow items-center justify-center">
+        <div className="flex grow items-center justify-center p-5">
           <LoadingDots />
         </div>
       );
   }
 }
 
-const OPTIONS_MOCK = [
-  'Products on page: 50',
-  'Filter',
-  'Sort by: Price Asc.'
-];
+// const OPTIONS_MOCK = [
+//   'Products on page: 50',
+//   'Filter',
+//   'Sort by: Price Asc.'
+// ];
 
 function Index() {
   const searchParams = useSearchParams();
@@ -64,7 +63,7 @@ function Index() {
         }
         // TODO: check if all fields are being received
         const productsData: Product[] = await response.json();
-        setPageState({ status: PageStatus.Data, data: productsData });
+        setPageState({ status: PageStatus.Data, data: productsData.map((product) => { return { ...product, photo_id: product.photo_id.split(' ').join('_') }; }) });
       } catch (err) {
         // TODO: idk if displaying any error like this is good for the UX...
         setPageState({ status: PageStatus.Error, reason: `An error occured: ${err}` });
@@ -77,19 +76,20 @@ function Index() {
   return (
     <>
       <NavBar />
-      <ul className={`flex justify-between my-5 py-1 mx-${PAGE_PADDING * 3 + 1} bg-white`}>
+      {/* <ul className={`flex justify-between my-5 py-1 mx-${PAGE_PADDING * 3 + 1} bg-white`}>
         {
           ...[OPTIONS_MOCK.map((opt, i) => (
             <li key={i} className="px-3 py-2 text-black font-normal"> {opt} </li>))]
         }
-      </ul>
+      </ul> */}
+      
       {choosePage(pageState, searchParams)}
     </>
   );
 }
 
 const Page = () => {
-  return (<Suspense><Index/></Suspense>);
+  return (<Suspense><Index /></Suspense>);
 }
 
 export default Page;

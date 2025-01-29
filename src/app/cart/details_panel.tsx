@@ -1,6 +1,7 @@
 import Select from "react-select";
 import { ShoppingStage } from "../types/shopping_stages";
 import { useState } from "react"
+import { Product } from "../types/product";
 
 const enum InputType {
     TextField,
@@ -39,7 +40,7 @@ const names: string[] = [
     "Prefix",
     "Phone",
     "E-mail"
-];
+] as const;
 
 
 const ADDRESS_INPUT_ROWS: InputPaneProps[][] = [
@@ -72,8 +73,30 @@ type DetailsPanelProp = {
     stage: ShoppingStage
 }
 
-export default function DetailsPanel({ stage }: DetailsPanelProp) {
+export let checkDetails = () => false;
 
+export function quantitiesFromProducts(products: Product[]): Map<Product, number> {
+    type ProductAndQuantity = {
+        product: Product,
+        quantity: number
+    };
+
+    const map = new Map<string, ProductAndQuantity>();
+
+    for (const product of products) {
+        const maybeProduct: ProductAndQuantity | undefined = map.get(product.id);
+
+        if (maybeProduct != undefined) {
+            map.set(product.id, { product: maybeProduct.product, quantity: maybeProduct.quantity + 1 });
+        } else {
+            map.set(product.id, { product: product, quantity: 1 });
+        }
+    }
+
+    return new Map(map.entries().map(([, { product, quantity }]) => [product, quantity]));
+}
+
+export function DetailsPanel({ stage }: DetailsPanelProp) {
     const [street, streetState] = useState("");
     const [number, numberState] = useState("");
     const [flat, flatState] = useState("");
@@ -84,31 +107,75 @@ export default function DetailsPanel({ stage }: DetailsPanelProp) {
     const [phone, phoneState] = useState("");
     const [email, emailState] = useState("");
 
+    function checkDetailsInner(): boolean {
+        for (const [name, info] of new Map([
+            ['street', street],
+            ['number', number],
+            // ['flat', flat],
+            ['post', post],
+            ['city', city],
+            ['country', country],
+            ['prefix', prefix],
+            ['phone', phone],
+            ['email', email]
+        ])) {
+            if (!info || info === '') {
+                alert(`Field '${name}' cannot be empty!`);
+                return false;
+            }
+        }
+
+        if (!post.match(/[0-9][0-9]-[0-9][0-9][0-9]/g)) {
+            console.log('post=', post)
+            alert(`'post' field has to be formatted like: XX-XXX`);
+            return false;
+        }
+    
+        return confirm('Proceed?');
+    }
+
+    checkDetails = checkDetailsInner;
+
     const stateTable = [street,number,flat,post,city,country,prefix,phone,email];
 
     const handle = (name: string, value: string | undefined) => {
-        if(value != undefined){
+        console.log('name=', name, 'value=', value);
+        if(value != undefined) {
             switch(name){
                 case names[0]:
                     streetState(value)
+                    console.log('streetState called')
+                    break;
                 case names[1]:
                     numberState(value)
+                    break;
                 case names[2]:
                     flatState(value)
+                    break;
                 case names[3]:
                     postcodeState(value)
+                    break;
                 case names[4]:
                     cityState(value)
+                    break;
                 case names[5]:
                     countryState(value)
+                    break;
                 case names[6]:
                     prefixState(value)
+                    break;
                 case names[7]:
                     phoneState(value)
+                    break;
                 case names[8]:
                     emailState(value)
+                    break;
+                default:
+                    console.log('handle default called (wtf?)');
+                    break;
             }
         }
+        console.log(street, number, flat, post, city, country, prefix, phone, email);
     }
 
     switch(stage){
@@ -155,7 +222,7 @@ export default function DetailsPanel({ stage }: DetailsPanelProp) {
                         {
                             ADDRESS_INPUT_ROWS.map((row, j) => (
                                 <div key={j} className="flex flex-row gap-2">
-                                    {row.map((props, i) => <InputPaneReadOnly key={i} index={i} stateTable={stateTable} handle={handle} {...props} />)}
+                                    {row.map((props, i) => <InputPaneReadOnly key={i} index={j} stateTable={stateTable} handle={handle} {...props} />)}
                                 </div>
                             ))
                         }
@@ -166,7 +233,7 @@ export default function DetailsPanel({ stage }: DetailsPanelProp) {
                         {
                             CONTACT_INPUT_ROWS.map((row, j) => (
                                 <div key={j} className="flex flex-row gap-2">
-                                    {row.map((props, i) => <InputPaneReadOnly key={i} index={i} stateTable={stateTable} handle={handle} {...props} />)}
+                                    {row.map((props, i) => <InputPaneReadOnly key={i} index={j + 6} stateTable={stateTable} handle={handle} {...props} />)}
                                 </div>
                             ))
                         }

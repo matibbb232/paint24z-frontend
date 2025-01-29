@@ -47,7 +47,7 @@ const LoginPage = () => {
             console.log('access=', localStorage.getItem('access_token'), 'refresh=', localStorage.getItem('refresh_token'))
             // TODO: set and use refresh token!
 
-            router.push("/");
+            router.back();
         } catch (err) {
             setError(`${err}`);
         }
@@ -67,11 +67,13 @@ const LoginPage = () => {
                         onInput={(e) => setUsername(e.target.value)}
                         name="Username" width="w-full"
                         placeholder="Username"
+                        isPassword={false}
                         flex={"flex-1"} index={4} />
                     <InputPane
                         onInput={(e) => setPassword(e.target.value)}
                         name="Password" width="w-full"
                         placeholder="Password"
+                        isPassword={true}
                         flex={"flex-1"} index={4} />
                     {
                         error ? <span className="text-highlightRed text-lg">{error}</span> : <></>
@@ -92,6 +94,7 @@ type InputPaneProps = {
     placeholder?: string,
     flex: string,
     width?: string,
+    isPassword: boolean,
     index: number,
     height?: string
 }
@@ -107,7 +110,7 @@ function InputPane(props: InputPaneProps) {
 
 function InputPaneOfType(props: InputPaneProps) {
     return (
-        <input onChange={props.onInput} onInput={() => console.log('hehe')} className="bg-white rounded-xl p-2" placeholder={props.placeholder}></input>
+        <input type={props.isPassword ? 'password' : 'text'} onChange={props.onInput} onInput={() => console.log('hehe')} className="bg-white rounded-xl p-2" placeholder={props.placeholder}></input>
     );
 }
 

@@ -86,7 +86,7 @@ async def manufacturers(response: Response):
     return [{
         "id": "19",
         "name": "JanuszexSA"
-    },{
+    }, {
         "id": "139",
         "name": "GoWin Sp. z o.o."
     }]
@@ -105,3 +105,33 @@ async def orders(response: Response):
             'client': random.random() * 2138,
         }
     ]
+
+@app.get('/about')
+async def about(response: Response):
+    response.headers["Access-Control-Allow-Origin"] = "*"
+    return {
+        'store': {
+            'name': 'POwurShop',
+            'email_address': 'powurshop.store@o2.pl',
+            'phone_number': '+4952192390',
+            'tax_id': '022-41-11-111',
+        },
+        'addresses': [
+            {
+                'country': 'Poland',
+                'city': 'Warsaw',
+                'street': 'Noakowskiego',
+                'building_number': '15',
+                'apartment_number': '3',
+                'postal_code': '01-234',
+            },
+            {
+                'country': 'Poland',
+                'city': 'Warsaw',
+                'street': 'Chmielna',
+                'building_number': '3',
+                'apartment_number': None,
+                'postal_code': '54-321',
+            },
+        ]
+    }

@@ -4,22 +4,30 @@ import { useEffect, useState } from "react";
 import { CartList } from "../resources/cart_list";
 import { useRouter } from "next/navigation";
 import { isAuthenticated } from "./is_auth";
+import { api_url } from "../resources/api";
+import { AboutData } from "../types/about";
 
 const PAGES_ROUTES = new Map([
     ['Main Page', "/"] as const,
     // TODO: Add proper routes
-    ['On Sale', ""] as const,
+    // ['On Sale', ""] as const,
     ['Categories', "/categories"] as const,
-    ['About Us', ""] as const,
-    ['Contact', ""] as const,
+    ['About Us', "/about"] as const,
+    // ['Contact', ""] as const,
 ]);
 
 export default function NavBar() {
+    const [shopName, setShopName] = useState('...');
     const [itemsInCartLen, setItemsInCartLen] = useState(0);
     const [user, setUser] = useState<string | null | undefined>(null);
     const router = useRouter();
 
     useEffect(() => {
+        fetch(api_url('about'))
+            .then((response) => response.json())
+            .then((json: AboutData) => setShopName(json.store.name))
+            .catch((err) => { console.log(err); setShopName('Our Shop'); })
+
         setItemsInCartLen(CartList.get().length);
         function checkUserData() {
             const item = CartList.get().length;
@@ -37,7 +45,7 @@ export default function NavBar() {
 
     return (
         <div className="mx-10">
-            <h1 className="flex flex-row gap-5 justify-center text-center font-bold font-jaro text-7xl p-5 pb-7 cursor-pointer">Our Shop</h1>
+            <h1 className="flex flex-row gap-5 justify-center text-center font-bold font-jaro text-7xl p-5 pb-7 cursor-pointer">{shopName}</h1>
             <div className="absolute right-40 top-12">
                 {
                     user == null ?
@@ -47,7 +55,7 @@ export default function NavBar() {
                             Sign in
                         </div> : <div className="rounded-xl flex bg-highlightYellow justify-center items-center 
                     px-5 right-28 h-auto hover:cursor-pointer"
-                            onClick={() => router.push("/TODO-LOGOUT")}>
+                            onClick={() => router.push("/logout")}>
                             Welcome, {user}
                         </div>
                 }
@@ -74,6 +82,7 @@ export default function NavBar() {
                     text-black font-normal" onClick={() => router.push(route)}> {name} </li>))
                 }
             </ul>
+            {/* <div className="w-full h-10"></div> */}
         </div>
     )
 }
